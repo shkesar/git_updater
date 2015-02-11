@@ -140,14 +140,16 @@ git_repository **updatable_repos) {
 
 // TODO - git_remote_load symbol is missing from libgit2.dylib
 void update_repo(git_repository *repo) {
-  git_remote *remote_upstream = NULL;
-  git_remote *remote_origin = NULL;
+  git_strarray *remote_names = malloc(sizeof(git_strarray));
+  git_remote *remote = NULL;
+  int index;
 
-  git_remote_load(&remote_upstream, repo, "upstream");
-  git_remote_load(&remote_upstream, repo, "origin");
+  git_remote_list(remote_names, repo);
 
-  git_remote_download(remote_upstream, NULL);
-  git_remote_connect(remote_origin, GIT_DIRECTION_PUSH);
+  for (index = 0; index < remote_names->count; index++) {
+    git_remote_lookup(&remote, repo, remote_names->strings[index]);
+    git_remote_connect(remote, GIT_DIRECTION_PUSH);
+  }
 }
 
 int main(int argc, char **argv) {
