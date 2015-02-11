@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #include <git2.h>
 
@@ -138,7 +139,6 @@ git_repository **updatable_repos) {
   return updateable_repos_count;
 }
 
-// TODO - git_remote_load symbol is missing from libgit2.dylib
 void update_repo(git_repository *repo) {
   git_strarray *remote_names = malloc(sizeof(git_strarray));
   git_remote *remote = NULL;
@@ -186,8 +186,11 @@ int main(int argc, char **argv) {
   printf("Identified %d repos for auto sync.\n", updateable_repos_count);
   // display_list(repos_names, repos_count);
 
-  for (int index = 0; index < repos_count; index++) {
-    update_repo(repos[index]);
+  while (1) {
+    for (int index = 0; index < repos_count; index++) {
+      update_repo(repos[index]);
+    }
+    sleep(3600);
   }
 
   git_libgit2_shutdown();
