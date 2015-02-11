@@ -11,6 +11,8 @@
 #define MAX_DIRECTORY_ENTRIES 100
 #define MAX_PATH_LENGTH 256
 
+#define TIME_SECONDS 3600
+
 typedef enum { false, true } bool;
 
 void display_list(char **list, int size) {
@@ -190,7 +192,7 @@ int main(int argc, char **argv) {
     for (int index = 0; index < repos_count; index++) {
       update_repo(repos[index]);
     }
-    sleep(3600);
+    sleep(TIME_SECONDS);
   }
 
   git_libgit2_shutdown();
