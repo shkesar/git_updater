@@ -16,3 +16,6 @@ using command line tools to merge changes when needed.
 
 This can particularly involve making a full-blown GUI for repository viewing
 which compares the references whether local or remote.
+
+To run this as a daemon, copy the file com.shkesar.gitud.plist in /Library/LaunchAgents/ path. Add the path of the compiled binary below the program key.
+The daemon will be executed on user login.
